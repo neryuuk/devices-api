@@ -1,0 +1,7 @@
+.git*
+.prettierrc
+dist
+Dockerfile
+eslint*
+node_modules
+README.md
