@@ -15,7 +15,7 @@ RUN ["pnpm", "build"]
 FROM pnpm AS prod
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store ["pnpm", "install", "--prod", "--frozen-lockfile"]
 
-FROM pnpm
+FROM pnpm AS start
 COPY --from=build /app/dist /app/dist
 COPY --from=prod /app/node_modules /app/node_modules
 EXPOSE 3000
