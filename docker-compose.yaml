@@ -1,13 +1,68 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
 
+networks:
+  data:
+    driver: bridge
+  default:
+    driver: bridge
+
 services:
+  db:
+    container_name: db
+    environment:
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGO_INITDB_ROOT_USERNAME=admin
+    healthcheck:
+      interval: 10s
+      retries: 5
+      start_period: 15s
+      test: |
+        echo 'db.adminCommand({ serverStatus: 1 }).ok' | mongosh admin -u $$MONGO_INITDB_ROOT_USERNAME -p $$MONGO_INITDB_ROOT_PASSWORD --quiet | grep 1
+      timeout: 5s
+    hostname: db
+    image: mongo:8.0.4-noble
+    networks:
+      - data
+    restart: unless-stopped
+
+  adm:
+    container_name: adm
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    environment:
+      - ME_CONFIG_MONGODB_AUTH_USERNAME=admin
+      - ME_CONFIG_MONGODB_AUTH_PASSWORD=admin
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+      - ME_CONFIG_MONGODB_URL=mongodb://admin:admin@db:27017/admin?tls=false
+      - ME_CONFIG_SITE_COOKIESECRET=cookiesecret
+      - ME_CONFIG_SITE_SESSIONSECRET=sessionsecret
+      - PORT=8000
+    hostname: adm
+    image: mongo-express:1.0.2-20-alpine3.19
+    networks:
+      - data
+    ports:
+      - 8000:8000
+    restart: unless-stopped
+
   svc:
     build:
       context: .
     container_name: svc
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
     environment:
       - PORT=3005
     hostname: svc
+    networks:
+      - data
+      - default
     ports:
       - 3005:3005
     restart: unless-stopped
