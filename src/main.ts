@@ -9,11 +9,10 @@ async function bootstrap() {
     logger: new CustomLogger(),
   });
 
-  SwaggerModule.setup('api', app, () => SwaggerModule.createDocument(
+  SwaggerModule.setup('docs', app, () => SwaggerModule.createDocument(
     app,
     new DocumentBuilder()
       .setTitle('Devices API')
-      .setDescription('Devices API')
       .setVersion('0.0.1')
       .build()
   ));
