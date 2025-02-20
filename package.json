@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "device-api",
+  "name": "devices-api",
   "version": "0.0.1",
   "description": "",
   "author": "Nelson Antunes <neryuuk@neryuuuk.com>",

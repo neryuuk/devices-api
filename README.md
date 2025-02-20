@@ -1,4 +1,4 @@
-# device-api
+# devices-api
 
 ## Description
 
