@@ -6,7 +6,10 @@
   "author": "Nelson Antunes <neryuuk@neryuuuk.com>",
   "private": true,
   "license": "UNLICENSED",
-  "engines": { "node": "^22", "pnpm": "^10" },
+  "engines": {
+    "node": "^22",
+    "pnpm": "^10"
+  },
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -23,6 +26,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^11.0.10",
+    "@nestjs/config": "^4.0.0",
     "@nestjs/core": "^11.0.10",
     "@nestjs/platform-express": "^11.0.10",
     "@nestjs/swagger": "^11.0.4",
