@@ -1,6 +1,7 @@
-import { Controller, Delete, Get, Patch, Post, Put } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
-import { DevicesService } from "./devices.service";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { CreateDeviceDto, UpdateDeviceDto } from './devices.dto';
+import { DevicesService } from './devices.service';
 
 @ApiTags('Devices')
 @Controller('devices')
@@ -8,32 +9,32 @@ export class DevicesController {
   constructor(private readonly devicesService: DevicesService) {}
 
   @Post()
-  create() {
-    return this.devicesService.create();
+  create(@Body() createDeviceDto: CreateDeviceDto) {
+    return this.devicesService.create(createDeviceDto);
   }
 
-  @Get('/:deviceId')
-  readOne() {
-    return this.devicesService.readOne()
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.devicesService.findOne(+id);
   }
 
   @Get()
-  readAll() {
-    return this.devicesService.readAll()
+  findAll() {
+    return this.devicesService.findAll();
   }
 
-  @Put()
-  update() {
-    return this.devicesService.update()
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateDeviceDto: UpdateDeviceDto) {
+    return this.devicesService.update(+id, updateDeviceDto);
   }
 
-  @Patch()
-  updatePartial() {
-    return this.devicesService.updatePartial()
+  @Patch(':id')
+  updatePartial(@Param('id') id: string, @Body() updateDeviceDto: UpdateDeviceDto) {
+    return this.devicesService.updatePartial(+id, updateDeviceDto);
   }
 
-  @Delete()
-  delete() {
-    return this.devicesService.delete()
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.devicesService.remove(+id);
   }
 }

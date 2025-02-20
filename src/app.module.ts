@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { DevicesModule } from './devices';
+import { DevicesModule } from './devices/devices.module';
 
 @Module({
   imports: [
