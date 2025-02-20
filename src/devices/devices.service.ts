@@ -20,31 +20,7 @@ export class DevicesService {
   }
 
   findAll(): Promise<Device[]> {
-    return Promise.resolve([{
-      id: 120001,
-      name: "Device Name 1",
-      brand_id: 1,
-      state: State.AVAILABLE,
-      created_at: new Date(),
-    },{
-      id: 120002,
-      name: "Device Name 2",
-      brand_id: 2,
-      state: State.AVAILABLE,
-      created_at: new Date(),
-    },{
-      id: 120003,
-      name: "Device Name 3",
-      brand_id: 3,
-      state: State.IN_USE,
-      created_at: new Date(),
-    },{
-      id: 120004,
-      name: "Device Name 4",
-      brand_id: 4,
-      state: State.INACTIVE,
-      created_at: new Date(),
-    }] as Device[])
+    return this.devicesRepository.find();
   }
 
   update(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
