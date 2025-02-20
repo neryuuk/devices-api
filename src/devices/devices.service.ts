@@ -1,77 +1,85 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Device, State } from './device.entity';
 import { CreateDeviceDto, UpdateDeviceDto } from './devices.dto';
 
 @Injectable()
 export class DevicesService {
+  constructor(
+    @InjectRepository(Device)
+    private devicesRepository: Repository<Device>
+  ) {}
+
   create(createDeviceDto: CreateDeviceDto) {
     return {
-      "id": "120001",
-      "name": "Device Name 1",
-      "brand": "Motorola",
-      "state": "available",
-      "created_at": new Date(),
-    } as unknown as CreateDeviceDto;
+      id: 120001,
+      name: "Device Name 1",
+      brand_id: 1,
+      state: State.AVAILABLE,
+      created_at: new Date(),
+    } as Device;
   }
 
-  findOne(id: number) {
-    return {
-      "id": "120001",
-      "name": "Device Name 1",
-      "brand": "Motorola",
-      "state": "available",
-      "created_at": new Date(),
-    } as unknown as CreateDeviceDto;
+  findOne(id: number): Promise<Device | null> {
+    return Promise.resolve({
+      id: 120001,
+      name: "Device Name 1",
+      brand_id: 1,
+      state: State.AVAILABLE,
+      created_at: new Date(),
+    } as Device);
   }
 
-  findAll() {
-    return [{
-      "id": "120001",
-      "name": "Device Name 1",
-      "brand": "Motorola",
-      "state": "available",
-      "created_at": new Date(),
+  findAll(): Promise<Device[]> {
+    return Promise.resolve([{
+      id: 120001,
+      name: "Device Name 1",
+      brand_id: 1,
+      state: State.AVAILABLE,
+      created_at: new Date(),
     },{
-      "id": "120002",
-      "name": "Device Name 2",
-      "brand": "Samsung",
-      "state": "available",
-      "created_at": new Date(),
+      id: 120002,
+      name: "Device Name 2",
+      brand_id: 2,
+      state: State.AVAILABLE,
+      created_at: new Date(),
     },{
-      "id": "120003",
-      "name": "Device Name 3",
-      "brand": "HTC",
-      "state": "in-use",
-      "created_at": new Date(),
+      id: 120003,
+      name: "Device Name 3",
+      brand_id: 3,
+      state: State.IN_USE,
+      created_at: new Date(),
     },{
-      "id": "120004",
-      "name": "Device Name 4",
-      "brand": "Huawei",
-      "state": "inactive",
-      "created_at": new Date(),
-    }] as unknown[] as CreateDeviceDto[]
+      id: 120004,
+      name: "Device Name 4",
+      brand_id: 4,
+      state: State.INACTIVE,
+      created_at: new Date(),
+    }] as Device[])
   }
 
-  update(id: number, updateDeviceDto: UpdateDeviceDto) {
-    return {
-      "id": "120001",
-      "name": "Device Name 1",
-      "brand": "Motorola",
-      "state": "available",
-      "created_at": new Date(),
-    } as unknown as CreateDeviceDto;
+  update(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
+    return Promise.resolve({
+      id: 120001,
+      name: "Device Name 1",
+      brand_id: 1,
+      state: State.AVAILABLE,
+      created_at: new Date(),
+    } as Device);
   }
 
-  updatePartial(id: number, updateDeviceDto: UpdateDeviceDto) {
-    return {
-      "id": "120001",
-      "name": "Device Name 1",
-      "brand": "Motorola",
-      "state": "available",
-      "created_at": new Date(),
-    } as unknown as CreateDeviceDto;
+  updatePartial(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
+    return Promise.resolve({
+      id: 120001,
+      name: "Device Name 1",
+      brand_id: 1,
+      state: State.AVAILABLE,
+      created_at: new Date(),
+    } as Device);
   }
 
-  remove(id: number) {
-    return true;
+  remove(id: number): Promise<boolean> {
+    return Promise.resolve(true);
   }
 }
