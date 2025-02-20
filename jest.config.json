@@ -1,12 +1,19 @@
 {
   "$schema": "https://json.schemastore.org/jest.json",
-  "moduleFileExtensions": ["js", "json", "ts"],
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
   "rootDir": "src",
   "testEnvironment": "node",
   "testRegex": ".*\\.spec\\.ts$",
   "transform": {
     "^.+\\.(t|j)s$": "@swc/jest"
   },
-  "collectCoverageFrom": ["**/*.(t|j)s"],
+  "collectCoverageFrom": [
+    "**/*.(t|j)s",
+    "!*.module.ts"
+  ],
   "coverageDirectory": "../coverage"
 }
