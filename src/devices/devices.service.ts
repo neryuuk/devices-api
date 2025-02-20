@@ -12,18 +12,11 @@ export class DevicesService {
   ) {}
 
   create(createDeviceDto: CreateDeviceDto) {
-    return this.devicesRepository
-      .save({ ...createDeviceDto } as Device)
+    return this.devicesRepository.save({ ...createDeviceDto } as Device)
   }
 
   findOne(id: number): Promise<Device | null> {
-    return Promise.resolve({
-      id: 120001,
-      name: "Device Name 1",
-      brand_id: 1,
-      state: State.AVAILABLE,
-      created_at: new Date(),
-    } as Device);
+    return this.devicesRepository.findOneBy({ id });
   }
 
   findAll(): Promise<Device[]> {
