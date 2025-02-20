@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
+
+services:
+  svc:
+    build:
+      context: .
+    container_name: svc
+    environment:
+      - PORT=3005
+    hostname: svc
+    ports:
+      - 3005:3005
+    restart: unless-stopped
