@@ -14,7 +14,9 @@ async function bootstrap() {
       app,
       new DocumentBuilder()
         .setTitle('Devices API')
+        .setDescription('REST API capable of persisting and managing device resources')
         .setVersion('0.0.1')
+        .setContact('Nelson Antunes', 'https://neryuuk.com/', 'neryuuk@neryuuk.com')
         .build(),
     ),
   )
