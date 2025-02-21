@@ -1,7 +1,8 @@
-import { ApiResponseProperty } from '@nestjs/swagger'
+import { ApiHideProperty, ApiResponseProperty } from '@nestjs/swagger'
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm'
@@ -12,7 +13,7 @@ export enum State {
   INACTIVE = 'inactive',
 }
 
-@Entity()
+@Entity('devices')
 export class Device {
   @ApiResponseProperty()
   @PrimaryGeneratedColumn()
@@ -33,4 +34,12 @@ export class Device {
   @ApiResponseProperty()
   @CreateDateColumn()
   public created_at: Date
+
+  @ApiHideProperty()
+  @Column()
+  public is_deleted: boolean
+
+  @ApiHideProperty()
+  @DeleteDateColumn()
+  public deleted_at: Date
 }
