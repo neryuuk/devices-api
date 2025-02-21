@@ -1,4 +1,4 @@
-import { ApiProperty, ApiSchema, PartialType } from "@nestjs/swagger";
+import { ApiProperty, ApiSchema, PartialType } from '@nestjs/swagger'
 
 @ApiSchema({ name: 'CreateDeviceDTO' })
 export class CreateDeviceDto {

@@ -1,31 +1,36 @@
-import { ApiResponseProperty } from "@nestjs/swagger";
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { ApiResponseProperty } from '@nestjs/swagger'
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 
 export enum State {
   AVAILABLE = 'available',
   IN_USE = 'in-use',
-  INACTIVE = 'inactive'
+  INACTIVE = 'inactive',
 }
 
 @Entity()
 export class Device {
   @ApiResponseProperty()
   @PrimaryGeneratedColumn()
-  public id: number;
+  public id: number
 
   @ApiResponseProperty()
   @Column()
-  public name: string;
+  public name: string
 
   @ApiResponseProperty()
   @Column()
-  public brand_id: number;
+  public brand_id: number
 
   @ApiResponseProperty()
   @Column({ type: 'enum', enum: State, default: State.AVAILABLE })
-  public state: State;
+  public state: State
 
   @ApiResponseProperty()
   @CreateDateColumn()
-  public created_at: Date;
+  public created_at: Date
 }
