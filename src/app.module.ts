@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { DataSource } from 'typeorm'
+import { Brand, BrandsModule } from './brands'
 import { Device, DevicesModule } from './devices'
 
 @Module({
@@ -14,9 +15,10 @@ import { Device, DevicesModule } from './devices'
       username: 'devices-api',
       password: 'devices-api',
       database: 'devices-api',
-      entities: [Device],
+      entities: [Brand, Device],
       synchronize: true,
     }),
+    BrandsModule,
     DevicesModule,
   ],
 })
