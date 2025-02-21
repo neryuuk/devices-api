@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Device, State } from './device.entity';
+import { Device } from './device.entity';
 import { CreateDeviceDto, UpdateDeviceDto } from './devices.dto';
 
 @Injectable()
@@ -23,24 +23,18 @@ export class DevicesService {
     return this.devicesRepository.find();
   }
 
-  update(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
-    return Promise.resolve({
-      id: 120001,
-      name: "Device Name 1",
-      brand_id: 1,
-      state: State.AVAILABLE,
-      created_at: new Date(),
-    } as Device);
+  async update(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
+    return this.devicesRepository.save(
+      { ...updateDeviceDto, id } as Partial<Device>,
+      { reload: true }
+    );
   }
 
   updatePartial(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
-    return Promise.resolve({
-      id: 120001,
-      name: "Device Name 1",
-      brand_id: 1,
-      state: State.AVAILABLE,
-      created_at: new Date(),
-    } as Device);
+    return this.devicesRepository.save(
+      { ...updateDeviceDto, id } as Partial<Device>,
+      { reload: true }
+    );
   }
 
   remove(id: number): Promise<boolean> {
