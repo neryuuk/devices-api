@@ -11,7 +11,7 @@ import {
   UseInterceptors
 } from '@nestjs/common'
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
-import { ErrorResponseDto } from 'src/core/errors'
+import { ErrorResponseDto } from '../core'
 import { Device, State } from './device.entity'
 import { CreateDeviceDto, UpdateDeviceDto } from './devices.dto'
 import { DevicesService } from './devices.service'

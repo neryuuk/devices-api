@@ -1,10 +1,10 @@
-import { HttpStatus } from "@nestjs/common"
+import { ErrorHttpStatusCode } from "@nestjs/common/utils/http-error-by-code.util"
 import { ApiResponseProperty, ApiSchema } from "@nestjs/swagger"
 
 @ApiSchema({ name: 'ErrorResponseDTO' })
 export class ErrorResponseDto {
-  @ApiResponseProperty()
-  public statusCode: HttpStatus
+  @ApiResponseProperty({ type: Number })
+  public statusCode: ErrorHttpStatusCode
 
   @ApiResponseProperty()
   public message: string
