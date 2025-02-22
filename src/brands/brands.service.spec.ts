@@ -1,15 +1,19 @@
+import { CoreModule } from '@core'
 import { Test, TestingModule } from '@nestjs/testing'
-import { DevicesService } from './devices.service'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { Brand } from './brand.entity'
+import { BrandsService } from './brands.service'
 
-describe('DevicesService', () => {
-  let service: DevicesService
+describe('BrandsService', () => {
+  let service: BrandsService
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [DevicesService],
+      imports: [TypeOrmModule.forFeature([Brand]), CoreModule],
+      providers: [BrandsService],
     }).compile()
 
-    service = module.get<DevicesService>(DevicesService)
+    service = module.get<BrandsService>(BrandsService)
   })
 
   it('should be defined', () => {

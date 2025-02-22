@@ -5,6 +5,9 @@
     "json",
     "ts"
   ],
+  "moduleNameMapper": {
+    "@core(/?.*)": "<rootDir>/core$1"
+  },
   "rootDir": "src",
   "testEnvironment": "node",
   "testRegex": ".*\\.spec\\.ts$",
