@@ -36,7 +36,7 @@ export class Device {
   public created_at: Date
 
   @ApiHideProperty()
-  @Column()
+  @Column({ default: false })
   public is_deleted: boolean
 
   @ApiHideProperty()
