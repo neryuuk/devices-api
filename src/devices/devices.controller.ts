@@ -10,7 +10,7 @@ import {
   Put,
   UseInterceptors
 } from '@nestjs/common'
-import { ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Device, State } from './device.entity'
 import { CreateDeviceDto, UpdateDeviceDto } from './devices.dto'
 import { DevicesService } from './devices.service'
@@ -22,6 +22,16 @@ export class DevicesController {
   constructor(private readonly devicesService: DevicesService) {}
 
   @Post()
+  @ApiCreatedResponse({
+    type: Device,
+    example: {
+      id: 120001,
+      name: 'Device Name 1',
+      brand_id: 1,
+      state: State.AVAILABLE,
+      created_at: new Date(),
+    } as Device,
+  })
   create(@Body() createDeviceDto: CreateDeviceDto) {
     return this.devicesService.create(createDeviceDto)
   }
