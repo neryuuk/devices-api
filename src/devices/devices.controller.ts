@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -7,6 +8,7 @@ import {
   Patch,
   Post,
   Put,
+  UseInterceptors
 } from '@nestjs/common'
 import { ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { Device, State } from './device.entity'
@@ -15,6 +17,7 @@ import { DevicesService } from './devices.service'
 
 @ApiTags('Devices')
 @Controller('devices')
+@UseInterceptors(ClassSerializerInterceptor)
 export class DevicesController {
   constructor(private readonly devicesService: DevicesService) {}
 

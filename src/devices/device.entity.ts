@@ -1,4 +1,5 @@
-import { ApiHideProperty, ApiResponseProperty } from '@nestjs/swagger'
+import { ApiProperty, ApiResponseProperty } from '@nestjs/swagger'
+import { Exclude } from 'class-transformer'
 import {
   Column,
   CreateDateColumn,
@@ -17,37 +18,33 @@ export enum State {
 
 @Entity('devices')
 export class Device {
-  public static readonly fields: string[] = [
-    'id','name','brand_id','state','created_at'
-  ]
-
   @ApiResponseProperty()
   @PrimaryGeneratedColumn()
   public id: number
 
-  @ApiResponseProperty()
+  @ApiProperty()
   @Column()
   public name: string
 
-  @ApiResponseProperty()
+  @ApiProperty()
   @Column()
   @ManyToOne('brands', { createForeignKeyConstraints: true, onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'brand_id' })
   public brand_id: number
 
-  @ApiResponseProperty()
+  @ApiProperty()
   @Column({ type: 'enum', enum: State, default: State.AVAILABLE })
   public state: State
 
   @ApiResponseProperty()
-  @CreateDateColumn()
+  @CreateDateColumn({ update: false })
   public created_at: Date
 
-  @ApiHideProperty()
-  @Column({ default: false })
-  public is_deleted: boolean
+  @DeleteDateColumn({ select: false })
+  @Exclude({ toPlainOnly: true })
+  public deleted_at?: Date
 
-  @ApiHideProperty()
-  @DeleteDateColumn()
-  public deleted_at: Date
+  constructor(partial: Partial<Device>) {
+    Object.assign(this, partial)
+  }
 }

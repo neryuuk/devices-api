@@ -15,11 +15,11 @@ export class DevicesService {
     return this.devicesRepository
       .createQueryBuilder()
       .insert()
-      .values({ ...createDeviceDto } as Device)
-      .returning(Device.fields)
+      .values(createDeviceDto as Partial<Device>)
+      .returning('*')
       .execute()
       .then(result => {
-        return result.raw[0] as Omit<Device, 'is_deleted'|'deleted_at'>
+        return new Device(result.raw[0])
       })
   }
 
