@@ -1,6 +1,6 @@
 import { ConsoleLogger } from '@nestjs/common'
 
-export class CustomLogger extends ConsoleLogger {
+export class LoggerService extends ConsoleLogger {
   protected override formatPid(pid: number): string {
     return `[Nest] ${pid} - `
   }
