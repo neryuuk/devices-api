@@ -1,12 +1,12 @@
 import { ArgumentsHost, Catch, HttpStatus } from '@nestjs/common'
-import { ExternalExceptionFilter } from '@nestjs/core/exceptions/external-exception-filter'
+import { BaseExceptionFilter } from '@nestjs/core'
 import { QueryFailedError } from 'typeorm'
 import { ErrorResponseDto } from '../errors/error-response.dto'
 
 @Catch(QueryFailedError)
-export class QueryFailedExceptionFilter extends ExternalExceptionFilter {
+export class QueryFailedExceptionFilter extends BaseExceptionFilter {
   catch(exception: QueryFailedError, host: ArgumentsHost) {
-    const { code } = exception as unknown as { code: string }
+    const { code } = exception as Partial<{ code: string }>
     const context = host.switchToHttp()
     const response = context.getResponse()
     const error = new ErrorResponseDto({
