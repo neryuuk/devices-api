@@ -4,15 +4,15 @@ services:
   db:
     container_name: db
     environment:
-      - MYSQL_DATABASE=devices-api
-      - MYSQL_PASSWORD=devices-api
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_USER=devices-api
+      - POSTGRES_DB=devices_api
+      - POSTGRES_PASSWORD=devices_api
+      - POSTGRES_USER=devices_api
+      - PGTZ=America/Sao_Paulo
       - TZ=America/Sao_Paulo
     hostname: db
-    image: mysql:8.4.4-oraclelinux9
+    image: postgres:17.3-bookworm
     ports:
-      - 3306:3306
+      - 5432:5432
     restart: unless-stopped
     volumes:
-      - ./mysql:/var/lib/mysql
+      - .data:/var/lib/postgresql/data
