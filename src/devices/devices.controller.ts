@@ -10,7 +10,8 @@ import {
   Put,
   UseInterceptors
 } from '@nestjs/common'
-import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { ErrorResponseDto } from 'src/core/errors'
 import { Device, State } from './device.entity'
 import { CreateDeviceDto, UpdateDeviceDto } from './devices.dto'
 import { DevicesService } from './devices.service'
@@ -21,7 +22,7 @@ import { DevicesService } from './devices.service'
 export class DevicesController {
   constructor(private readonly devicesService: DevicesService) {}
 
-  @Post()
+  @ApiBadRequestResponse({ type: ErrorResponseDto })
   @ApiCreatedResponse({
     type: Device,
     example: {
@@ -32,11 +33,13 @@ export class DevicesController {
       created_at: new Date(),
     } as Device,
   })
+  @Post()
   create(@Body() createDeviceDto: CreateDeviceDto) {
     return this.devicesService.create(createDeviceDto)
   }
 
-  @Get(':id')
+  @ApiBadRequestResponse({ type: ErrorResponseDto })
+  @ApiNotFoundResponse({ type: ErrorResponseDto })
   @ApiOkResponse({
     type: Device,
     example: {
@@ -47,12 +50,13 @@ export class DevicesController {
       created_at: new Date(),
     } as Device,
   })
-  @ApiNotFoundResponse()
+  @Get(':id')
   findOne(@Param('id') id: string) {
     return this.devicesService.findOne(+id)
   }
 
-  @Get()
+  @ApiBadRequestResponse({ type: ErrorResponseDto })
+  @ApiNotFoundResponse({ type: Device, isArray: true, example: [] })
   @ApiOkResponse({
     type: Device,
     isArray: true,
@@ -66,16 +70,18 @@ export class DevicesController {
       },
     ],
   })
-  @ApiNotFoundResponse({ type: Device, isArray: true, example: [] })
+  @Get()
   findAll() {
     return this.devicesService.findAll()
   }
 
+  @ApiBadRequestResponse({ type: ErrorResponseDto })
   @Put(':id')
   update(@Param('id') id: string, @Body() updateDeviceDto: UpdateDeviceDto) {
     return this.devicesService.update(+id, updateDeviceDto)
   }
 
+  @ApiBadRequestResponse({ type: ErrorResponseDto })
   @Patch(':id')
   updatePartial(
     @Param('id') id: string,
@@ -84,6 +90,7 @@ export class DevicesController {
     return this.devicesService.updatePartial(+id, updateDeviceDto)
   }
 
+  @ApiBadRequestResponse({ type: ErrorResponseDto })
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.devicesService.remove(+id)

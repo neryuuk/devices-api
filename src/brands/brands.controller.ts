@@ -8,7 +8,8 @@ import {
   Post,
   Put,
 } from '@nestjs/common'
-import { ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { ErrorResponseDto } from 'src/core/errors'
 import { Brand } from './brand.entity'
 import { CreateBrandDto, UpdateBrandDto } from './brands.dto'
 import { BrandsService } from './brands.service'
@@ -19,11 +20,21 @@ export class BrandsController {
   constructor(private readonly brandsService: BrandsService) {}
 
   @Post()
+  @ApiBadRequestResponse({ type: ErrorResponseDto })
+  @ApiCreatedResponse({
+    type: Brand,
+    example: {
+      id: 120001,
+      name: 'Brand Name 1',
+    } as Brand,
+  })
   create(@Body() createBrandDto: CreateBrandDto) {
     return this.brandsService.create(createBrandDto)
   }
 
   @Get(':id')
+  @ApiBadRequestResponse({ type: ErrorResponseDto })
+  @ApiNotFoundResponse({ type: ErrorResponseDto })
   @ApiOkResponse({
     type: Brand,
     example: {
@@ -31,12 +42,12 @@ export class BrandsController {
       name: 'Brand Name 1',
     } as Brand,
   })
-  @ApiNotFoundResponse()
   findOne(@Param('id') id: string) {
     return this.brandsService.findOne(+id)
   }
 
   @Get()
+  @ApiNotFoundResponse({ type: Brand, isArray: true, example: [] })
   @ApiOkResponse({
     type: Brand,
     isArray: true,
@@ -47,13 +58,15 @@ export class BrandsController {
       },
     ],
   })
-  @ApiNotFoundResponse({ type: Brand, isArray: true, example: [] })
   findAll() {
     return this.brandsService.findAll()
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateBrandDto: UpdateBrandDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateBrandDto: UpdateBrandDto,
+  ) {
     return this.brandsService.update(+id, updateBrandDto)
   }
 
@@ -65,6 +78,7 @@ export class BrandsController {
     return this.brandsService.updatePartial(+id, updateBrandDto)
   }
 
+  @ApiBadRequestResponse({ type: ErrorResponseDto })
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.brandsService.remove(+id)
