@@ -2,7 +2,12 @@ import { HttpStatus, ValidationPipe } from '@nestjs/common'
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
-import { CatchAllExceptionFilter, LoggerService, QueryFailedExceptionFilter } from './core'
+import {
+  CatchAllExceptionFilter,
+  LoggerService,
+  NotFoundExceptionFilter,
+  QueryFailedExceptionFilter,
+} from './core'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -12,6 +17,7 @@ async function bootstrap() {
 
   app.useGlobalFilters(
     new CatchAllExceptionFilter(app.get(HttpAdapterHost).httpAdapter),
+    new NotFoundExceptionFilter(),
     new QueryFailedExceptionFilter(),
   )
 
