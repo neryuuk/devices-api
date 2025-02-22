@@ -15,7 +15,7 @@ export class BrandsService {
     return this.brandsRepository
       .createQueryBuilder()
       .insert()
-      .values({ ...createBrandDto } as Brand)
+      .values(createBrandDto as Partial<Brand>)
       .returning('*')
       .execute()
       .then(result => result.raw[0] as Brand)
@@ -29,7 +29,7 @@ export class BrandsService {
     return this.brandsRepository.find()
   }
 
-  async update(id: number, updateBrandDto: UpdateBrandDto): Promise<Brand> {
+  update(id: number, updateBrandDto: UpdateBrandDto): Promise<Brand> {
     return this.brandsRepository.save(
       { ...updateBrandDto, id } as Partial<Brand>,
       { reload: true },
@@ -46,6 +46,6 @@ export class BrandsService {
   remove(id: number): Promise<boolean> {
     return this.brandsRepository
       .delete({ id })
-      .then(result => result.affected === 1)
+      .then(result => result?.affected === 1)
   }
 }
