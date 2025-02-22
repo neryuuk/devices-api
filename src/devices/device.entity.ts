@@ -4,6 +4,8 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
 
@@ -25,6 +27,8 @@ export class Device {
 
   @ApiResponseProperty()
   @Column()
+  @ManyToOne('brands', { createForeignKeyConstraints: true, onDelete: 'RESTRICT' })
+  @JoinColumn({ name: 'brand_id' })
   public brand_id: number
 
   @ApiResponseProperty()
