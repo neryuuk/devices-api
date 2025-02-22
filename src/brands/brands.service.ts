@@ -12,7 +12,15 @@ export class BrandsService {
   ) {}
 
   create(createBrandDto: CreateBrandDto) {
-    return this.brandsRepository.save({ ...createBrandDto } as Brand)
+    return this.brandsRepository
+      .createQueryBuilder()
+      .insert()
+      .values({ ...createBrandDto } as Brand)
+      .returning('*')
+      .execute()
+      .then(result => {
+        return result.raw[0] as Brand
+      })
   }
 
   findOne(id: number): Promise<Brand | null> {

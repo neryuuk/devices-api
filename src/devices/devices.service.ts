@@ -12,7 +12,15 @@ export class DevicesService {
   ) {}
 
   create(createDeviceDto: CreateDeviceDto) {
-    return this.devicesRepository.save({ ...createDeviceDto } as Device)
+    return this.devicesRepository
+      .createQueryBuilder()
+      .insert()
+      .values({ ...createDeviceDto } as Device)
+      .returning('*')
+      .execute()
+      .then(result => {
+        return result.raw[0] as Device
+      })
   }
 
   findOne(id: number): Promise<Device | null> {
