@@ -1,3 +1,4 @@
+import { ErrorResponseDto } from '@core'
 import {
   Body,
   Controller,
@@ -9,7 +10,6 @@ import {
   Put,
 } from '@nestjs/common'
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
-import { ErrorResponseDto } from '../core'
 import { Brand } from './brand.entity'
 import { CreateBrandDto, UpdateBrandDto } from './brands.dto'
 import { BrandsService } from './brands.service'

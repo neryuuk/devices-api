@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { DataSource } from 'typeorm'
-import { Brand, BrandsModule } from './brands'
-import { Device, DevicesModule } from './devices'
+import { Brand, BrandsModule } from '../brands'
+import { Device, DevicesModule } from '../devices'
 
 @Module({
   imports: [
@@ -23,6 +23,6 @@ import { Device, DevicesModule } from './devices'
     DevicesModule,
   ],
 })
-export class AppModule {
+export class CoreModule {
   constructor(private dataSource: DataSource) {}
 }
