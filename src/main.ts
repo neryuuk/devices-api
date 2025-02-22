@@ -1,13 +1,26 @@
-import { NestFactory } from '@nestjs/core'
+import { HttpStatus, ValidationPipe } from '@nestjs/common'
+import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
-import { CustomLogger } from './custom.logger'
+import { CatchAllExceptionFilter, LoggerService, QueryFailedExceptionFilter } from './core'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     forceCloseConnections: true,
-    logger: new CustomLogger(),
+    logger: new LoggerService(),
   })
+
+  app.useGlobalFilters(
+    new CatchAllExceptionFilter(app.get(HttpAdapterHost).httpAdapter),
+    new QueryFailedExceptionFilter(),
+  )
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      errorHttpStatusCode: HttpStatus.BAD_REQUEST,
+      transform: true,
+    })
+  )
 
   SwaggerModule.setup('docs', app, () =>
     SwaggerModule.createDocument(
