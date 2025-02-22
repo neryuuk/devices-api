@@ -17,6 +17,10 @@ export enum State {
 
 @Entity('devices')
 export class Device {
+  public static readonly fields: string[] = [
+    'id','name','brand_id','state','created_at'
+  ]
+
   @ApiResponseProperty()
   @PrimaryGeneratedColumn()
   public id: number

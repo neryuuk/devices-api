@@ -16,10 +16,10 @@ export class DevicesService {
       .createQueryBuilder()
       .insert()
       .values({ ...createDeviceDto } as Device)
-      .returning('*')
+      .returning(Device.fields)
       .execute()
       .then(result => {
-        return result.raw[0] as Device
+        return result.raw[0] as Omit<Device, 'is_deleted'|'deleted_at'>
       })
   }
 
