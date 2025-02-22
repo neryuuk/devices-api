@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { IsNull, Repository } from 'typeorm'
 import { Device } from './device.entity'
 import { CreateDeviceDto, UpdateDeviceDto } from './devices.dto'
 
@@ -18,20 +18,23 @@ export class DevicesService {
       .values(createDeviceDto as Partial<Device>)
       .returning('*')
       .execute()
-      .then(result => {
-        return new Device(result.raw[0])
-      })
+      .then(result => new Device(result.raw[0]))
   }
 
   findOne(id: number): Promise<Device | null> {
-    return this.devicesRepository.findOneBy({ id })
+    return this.devicesRepository
+      .findOneBy({ id, deleted_at: IsNull() })
+      .then(result => {
+        if (!result) throw new NotFoundException()
+        return result
+      })
   }
 
   findAll(): Promise<Device[]> {
     return this.devicesRepository.find()
   }
 
-  async update(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
+  update(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
     return this.devicesRepository.save(
       { ...updateDeviceDto, id } as Partial<Device>,
       { reload: true },
@@ -46,6 +49,8 @@ export class DevicesService {
   }
 
   remove(id: number): Promise<boolean> {
-    return Promise.resolve(true)
+    return this.devicesRepository
+      .softDelete({ id, deleted_at: IsNull() })
+      .then(result => result?.affected === 1)
   }
 }
