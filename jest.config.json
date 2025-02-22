@@ -1,5 +1,4 @@
 {
-  "$schema": "https://json.schemastore.org/jest.json",
   "moduleFileExtensions": [
     "js",
     "json",
@@ -16,7 +15,11 @@
   },
   "collectCoverageFrom": [
     "**/*.(t|j)s",
-    "!*.module.ts"
+    "!**/*.dto.(t|j)s",
+    "!**/*.entity.(t|j)s",
+    "!**/*.module.(t|j)s",
+    "!**/index.(t|j)s",
+    "!**/main.(t|j)s"
   ],
   "coverageDirectory": "../coverage"
 }
