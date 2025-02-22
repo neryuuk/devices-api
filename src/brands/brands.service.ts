@@ -18,9 +18,7 @@ export class BrandsService {
       .values({ ...createBrandDto } as Brand)
       .returning('*')
       .execute()
-      .then(result => {
-        return result.raw[0] as Brand
-      })
+      .then(result => result.raw[0] as Brand)
   }
 
   findOne(id: number): Promise<Brand | null> {
@@ -46,6 +44,8 @@ export class BrandsService {
   }
 
   remove(id: number): Promise<boolean> {
-    return Promise.resolve(true)
+    return this.brandsRepository
+      .delete({ id })
+      .then(result => result.affected === 1)
   }
 }
