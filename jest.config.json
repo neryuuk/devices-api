@@ -1,0 +1,22 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": "src",
+  "testEnvironment": "node",
+  "testRegex": ".*\\.spec\\.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "@swc/jest"
+  },
+  "collectCoverageFrom": [
+    "**/*.(t|j)s",
+    "!**/*.dto.(t|j)s",
+    "!**/*.entity.(t|j)s",
+    "!**/*.module.(t|j)s",
+    "!**/index.(t|j)s",
+    "!**/main.(t|j)s"
+  ],
+  "coverageDirectory": "../coverage"
+}

@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
+
+services:
+  db:
+    container_name: db
+    environment:
+      - POSTGRES_DB=devices_api
+      - POSTGRES_PASSWORD=devices_api
+      - POSTGRES_USER=devices_api
+      - PGTZ=America/Sao_Paulo
+      - TZ=America/Sao_Paulo
+    hostname: db
+    image: postgres:17.3-bookworm
+    # ports:
+    #   - 5432:5432
+    restart: unless-stopped
+    volumes:
+      - .data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - PORT=3005
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=devices_api
+      - DB_PASS=devices_api
+      - DB_DB=devices_api
+      - APP_NAME=devices_api
+    hostname: app
+    ports:
+      - 3005:3005

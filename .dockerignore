@@ -1,0 +1,9 @@
+.env*
+.git*
+.prettierrc
+.vscode
+dist
+Dockerfile
+eslint*
+node_modules
+README.md
