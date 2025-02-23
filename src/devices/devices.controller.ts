@@ -9,14 +9,14 @@ import {
   Post,
   Put,
   Query,
-  UseInterceptors
+  UseInterceptors,
 } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
-  ApiTags
+  ApiTags,
 } from '@nestjs/swagger'
 import { ErrorResponseDto, errorResponseMock } from '../core/errors'
 import { Device } from './device.entity'
@@ -60,10 +60,7 @@ export class DevicesController {
   @ApiBadRequestResponse({ type: ErrorResponseDto, example: errorResponseMock })
   @ApiOkResponse({ type: Device, example: deviceMock[0] })
   @Put(':id')
-  update(
-    @Param('id') id: number,
-    @Body() updateDeviceDto: CreateDeviceDto
-  ) {
+  update(@Param('id') id: number, @Body() updateDeviceDto: CreateDeviceDto) {
     return this.devicesService.update(+id, updateDeviceDto)
   }
 

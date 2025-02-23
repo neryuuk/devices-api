@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { ForbiddenEditException } from 'src/core/errors/forbidden-edit.error'
 import { FindOptionsWhere, IsNull, Repository } from 'typeorm'
@@ -60,7 +64,9 @@ export class DevicesService {
     if (
       statusCheck?.state === State.IN_USE &&
       (updateDeviceDto.name || updateDeviceDto.brand_id)
-    ) throw new ForbiddenEditException()
+    ) {
+      throw new ForbiddenEditException()
+    }
 
     const result = await this.devicesRepository
       .createQueryBuilder()
@@ -69,12 +75,9 @@ export class DevicesService {
       .returning('*')
       .execute()
 
-    if (
-      result &&
-      result.raw &&
-      Array.isArray(result.raw) &&
-      result.raw[0]
-    ) return new Device(result.raw[0] as Device)
+    if (result && result.raw && Array.isArray(result.raw) && result.raw[0]) {
+      return new Device(result.raw[0] as Device)
+    }
 
     throw new NotFoundException()
   }
@@ -83,7 +86,9 @@ export class DevicesService {
     if (Number.isNaN(id)) throw new BadRequestException()
 
     const statusCheck = await this.findOne(id)
-    if (statusCheck?.state === State.IN_USE) throw new ForbiddenEditException()
+    if (statusCheck?.state === State.IN_USE) {
+      throw new ForbiddenEditException()
+    }
 
     return this.devicesRepository
       .softDelete({ id, deleted_at: IsNull() })

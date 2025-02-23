@@ -12,7 +12,7 @@ import { Device, DevicesModule } from '../devices'
       type: 'postgres',
       synchronize: process.env.NODE_ENV !== 'production',
       host: process.env.DB_HOST || 'localhost',
-      port: parseInt (process.env.DB_PORT || '5432'),
+      port: parseInt(process.env.DB_PORT || '5432'),
       username: process.env.DB_USER || 'devices_api',
       password: process.env.DB_PASS || 'devices_api',
       database: process.env.DB_DB || 'devices_api',

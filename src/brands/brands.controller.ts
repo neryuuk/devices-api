@@ -52,10 +52,7 @@ export class BrandsController {
   @ApiBadRequestResponse({ type: ErrorResponseDto, example: errorResponseMock })
   @ApiOkResponse({ type: Brand, example: brandMock[0] })
   @Put(':id')
-  update(
-    @Param('id') id: number,
-    @Body() updateBrandDto: CreateBrandDto
-  ) {
+  update(@Param('id') id: number, @Body() updateBrandDto: CreateBrandDto) {
     return this.brandsService.update(+id, updateBrandDto)
   }
 
