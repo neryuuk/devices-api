@@ -6,6 +6,8 @@ REST API using [NestJS](https://github.com/nestjs/nest) framework (based on inst
 
 ## Running inside docker
 
+For more information on installing and configuring the Docker Engine: https://docs.docker.com/engine/install/
+
 The project is containerized and can be run via [`docker-compose.yaml`](docker-compose.yaml)
 
 ```bash
