@@ -11,8 +11,8 @@ services:
       - TZ=America/Sao_Paulo
     hostname: db
     image: postgres:17.3-bookworm
-    # ports:
-    #   - 5432:5432
+    ports:
+      - 5432:5432
     restart: unless-stopped
     volumes:
       - .data:/var/lib/postgresql/data
