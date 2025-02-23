@@ -10,7 +10,7 @@ import { Device, DevicesModule } from '../devices'
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      synchronize: true,
+      synchronize: process.env.NODE_ENV !== 'production',
       host: process.env.DB_HOST || 'localhost',
       port: parseInt (process.env.DB_PORT || '5432'),
       username: process.env.DB_USER || 'devices_api',
