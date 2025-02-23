@@ -89,7 +89,10 @@ export class DevicesController {
 
   @ApiBadRequestResponse({ type: ErrorResponseDto })
   @Put(':id')
-  update(@Param('id') id: number, @Body() updateDeviceDto: UpdateDeviceDto) {
+  update(
+    @Param('id') id: number,
+    @Body() updateDeviceDto: CreateDeviceDto
+  ) {
     return this.devicesService.update(+id, updateDeviceDto)
   }
 
@@ -99,7 +102,7 @@ export class DevicesController {
     @Param('id') id: number,
     @Body() updateDeviceDto: UpdateDeviceDto,
   ) {
-    return this.devicesService.updatePartial(+id, updateDeviceDto)
+    return this.devicesService.update(+id, updateDeviceDto)
   }
 
   @ApiBadRequestResponse({ type: ErrorResponseDto })
