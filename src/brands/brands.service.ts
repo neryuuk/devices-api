@@ -18,7 +18,16 @@ export class BrandsService {
       .values(createBrandDto as Partial<Brand>)
       .returning('*')
       .execute()
-      .then(result => result.raw[0] as Brand)
+      .then((result) => {
+        if (
+          result &&
+          result.raw &&
+          Array.isArray(result.raw) &&
+          result.raw[0]
+        ) {
+          return result.raw[0] as Brand
+        }
+      })
   }
 
   findOne(id: number): Promise<Brand | null> {
@@ -46,6 +55,6 @@ export class BrandsService {
   remove(id: number): Promise<boolean> {
     return this.brandsRepository
       .delete({ id })
-      .then(result => result?.affected === 1)
+      .then((result) => result?.affected === 1)
   }
 }

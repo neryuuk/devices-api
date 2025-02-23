@@ -1,4 +1,9 @@
-import { ApiProperty, ApiPropertyOptional, ApiSchema, PartialType } from '@nestjs/swagger'
+import {
+  ApiProperty,
+  ApiPropertyOptional,
+  ApiSchema,
+  PartialType,
+} from '@nestjs/swagger'
 import { State } from './state.enum'
 
 @ApiSchema({ name: 'CreateDeviceDTO' })

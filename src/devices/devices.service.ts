@@ -1,8 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { FindManyOptions, IsNull, Repository } from 'typeorm'
+import { FindOptionsWhere, IsNull, Repository } from 'typeorm'
 import { Device } from './device.entity'
-import { CreateDeviceDto, SearchDeviceDto, UpdateDeviceDto } from './devices.dto'
+import {
+  CreateDeviceDto,
+  SearchDeviceDto,
+  UpdateDeviceDto,
+} from './devices.dto'
 
 @Injectable()
 export class DevicesService {
@@ -18,21 +22,31 @@ export class DevicesService {
       .values(createDeviceDto as Partial<Device>)
       .returning('*')
       .execute()
-      .then(result => new Device(result.raw[0]))
+      .then((result) => {
+        if (
+          result &&
+          result.raw &&
+          Array.isArray(result.raw) &&
+          result.raw[0]
+        ) {
+          return new Device(result.raw[0] as Device)
+        }
+      })
   }
 
   findOne(id: number): Promise<Device | null> {
     return this.devicesRepository
       .findOneBy({ id, deleted_at: IsNull() })
-      .then(result => {
+      .then((result) => {
         if (!result) throw new NotFoundException()
         return result
       })
   }
 
   findAll(query?: SearchDeviceDto): Promise<Device[]> {
-    const queryOptions: FindManyOptions<Partial<SearchDeviceDto>> = {}
-    return this.devicesRepository.find()
+    return this.devicesRepository.findBy(
+      query as FindOptionsWhere<SearchDeviceDto>,
+    )
   }
 
   update(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
@@ -52,6 +66,6 @@ export class DevicesService {
   remove(id: number): Promise<boolean> {
     return this.devicesRepository
       .softDelete({ id, deleted_at: IsNull() })
-      .then(result => result?.affected === 1)
+      .then((result) => result?.affected === 1)
   }
 }

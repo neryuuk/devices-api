@@ -23,7 +23,10 @@ export class Device {
 
   @ApiProperty()
   @Column()
-  @ManyToOne('brands', { createForeignKeyConstraints: true, onDelete: 'RESTRICT' })
+  @ManyToOne('brands', {
+    createForeignKeyConstraints: true,
+    onDelete: 'RESTRICT',
+  })
   @JoinColumn({ name: 'brand_id' })
   public brand_id: number
 

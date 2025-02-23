@@ -1,14 +1,14 @@
 import { ArgumentsHost, Catch, HttpStatus } from '@nestjs/common'
 import { BaseExceptionFilter } from '@nestjs/core'
+import { Response } from 'express'
 import { QueryFailedError } from 'typeorm'
 import { ErrorResponseDto } from '../errors/error-response.dto'
 
 @Catch(QueryFailedError)
 export class QueryFailedExceptionFilter extends BaseExceptionFilter {
-  catch(exception: QueryFailedError, host: ArgumentsHost) {
+  catch(exception: QueryFailedError, host: ArgumentsHost): void {
     const { code } = exception as Partial<{ code: string }>
-    const context = host.switchToHttp()
-    const response = context.getResponse()
+    const response = host.switchToHttp().getResponse<Response>()
     const error = new ErrorResponseDto({
       statusCode: HttpStatus.BAD_REQUEST,
       message: `Error #${code} while running query`,
@@ -18,6 +18,6 @@ export class QueryFailedExceptionFilter extends BaseExceptionFilter {
       error.message = 'Cannot delete item while in use'
     }
 
-    return response.status(error.statusCode).json(error)
+    response.status(error.statusCode).json(error)
   }
 }

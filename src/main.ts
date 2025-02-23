@@ -9,7 +9,7 @@ import {
   QueryFailedExceptionFilter,
 } from './core'
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(CoreModule, {
     forceCloseConnections: true,
     logger: new LoggerService(),
@@ -25,7 +25,7 @@ async function bootstrap() {
     new ValidationPipe({
       errorHttpStatusCode: HttpStatus.BAD_REQUEST,
       transform: true,
-    })
+    }),
   )
 
   SwaggerModule.setup('docs', app, () =>
@@ -33,9 +33,15 @@ async function bootstrap() {
       app,
       new DocumentBuilder()
         .setTitle('Devices API')
-        .setDescription('REST API capable of persisting and managing device resources')
+        .setDescription(
+          'REST API capable of persisting and managing device resources',
+        )
         .setVersion('0.0.1')
-        .setContact('Nelson Antunes', 'https://neryuuk.com/', 'neryuuk@neryuuk.com')
+        .setContact(
+          'Nelson Antunes',
+          'https://neryuuk.com/',
+          'neryuuk@neryuuk.com',
+        )
         .build(),
     ),
   )
@@ -43,4 +49,5 @@ async function bootstrap() {
   await app.listen(process.env.PORT ?? 3000)
 }
 
+// eslint-disable-next-line
 bootstrap()

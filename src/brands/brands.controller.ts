@@ -8,7 +8,13 @@ import {
   Post,
   Put,
 } from '@nestjs/common'
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 import { ErrorResponseDto } from '../core/errors/error-response.dto'
 import { Brand } from './brand.entity'
 import { CreateBrandDto, UpdateBrandDto } from './brands.dto'
@@ -63,10 +69,7 @@ export class BrandsController {
   }
 
   @Put(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateBrandDto: UpdateBrandDto,
-  ) {
+  update(@Param('id') id: string, @Body() updateBrandDto: UpdateBrandDto) {
     return this.brandsService.update(+id, updateBrandDto)
   }
 

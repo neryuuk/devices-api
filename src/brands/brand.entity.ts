@@ -1,9 +1,5 @@
 import { ApiResponseProperty } from '@nestjs/swagger'
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn
-} from 'typeorm'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity('brands')
 export class Brand {

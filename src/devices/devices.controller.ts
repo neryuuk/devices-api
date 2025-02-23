@@ -9,12 +9,22 @@ import {
   Post,
   Put,
   Query,
-  UseInterceptors
+  UseInterceptors,
 } from '@nestjs/common'
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 import { ErrorResponseDto } from '../core/errors/error-response.dto'
 import { Device } from './device.entity'
-import { CreateDeviceDto, SearchDeviceDto, UpdateDeviceDto } from './devices.dto'
+import {
+  CreateDeviceDto,
+  SearchDeviceDto,
+  UpdateDeviceDto,
+} from './devices.dto'
 import { DevicesService } from './devices.service'
 import { State } from './state.enum'
 

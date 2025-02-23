@@ -1,5 +1,5 @@
-import { ErrorHttpStatusCode } from "@nestjs/common/utils/http-error-by-code.util"
-import { ApiResponseProperty, ApiSchema } from "@nestjs/swagger"
+import { ErrorHttpStatusCode } from '@nestjs/common/utils/http-error-by-code.util'
+import { ApiResponseProperty, ApiSchema } from '@nestjs/swagger'
 
 @ApiSchema({ name: 'ErrorResponseDTO' })
 export class ErrorResponseDto {
