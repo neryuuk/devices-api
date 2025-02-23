@@ -18,7 +18,7 @@ export class Device {
   public id: number
 
   @ApiProperty()
-  @Column()
+  @Column({ type: 'varchar', length: 64, nullable: false })
   public name: string
 
   @ApiProperty()
