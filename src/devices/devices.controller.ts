@@ -8,12 +8,13 @@ import {
   Patch,
   Post,
   Put,
+  Query,
   UseInterceptors
 } from '@nestjs/common'
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { ErrorResponseDto } from '../core/errors/error-response.dto'
 import { Device } from './device.entity'
-import { CreateDeviceDto, UpdateDeviceDto } from './devices.dto'
+import { CreateDeviceDto, SearchDeviceDto, UpdateDeviceDto } from './devices.dto'
 import { DevicesService } from './devices.service'
 import { State } from './state.enum'
 
@@ -72,8 +73,11 @@ export class DevicesController {
     ],
   })
   @Get()
-  findAll() {
-    return this.devicesService.findAll()
+  findAll(
+    @Query()
+    query?: SearchDeviceDto,
+  ) {
+    return this.devicesService.findAll(query)
   }
 
   @ApiBadRequestResponse({ type: ErrorResponseDto })

@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { IsNull, Repository } from 'typeorm'
+import { FindManyOptions, IsNull, Repository } from 'typeorm'
 import { Device } from './device.entity'
-import { CreateDeviceDto, UpdateDeviceDto } from './devices.dto'
+import { CreateDeviceDto, SearchDeviceDto, UpdateDeviceDto } from './devices.dto'
 
 @Injectable()
 export class DevicesService {
@@ -30,7 +30,8 @@ export class DevicesService {
       })
   }
 
-  findAll(): Promise<Device[]> {
+  findAll(query?: SearchDeviceDto): Promise<Device[]> {
+    const queryOptions: FindManyOptions<Partial<SearchDeviceDto>> = {}
     return this.devicesRepository.find()
   }
 

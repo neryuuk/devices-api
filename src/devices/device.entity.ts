@@ -27,7 +27,7 @@ export class Device {
   @JoinColumn({ name: 'brand_id' })
   public brand_id: number
 
-  @ApiProperty()
+  @ApiProperty({ type: String, enum: State })
   @Column({ type: 'enum', enum: State, default: State.AVAILABLE })
   public state: State
 
