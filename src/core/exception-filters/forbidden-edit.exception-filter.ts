@@ -14,7 +14,7 @@ export class ForbiddenEditExceptionFilter extends BaseExceptionFilter {
     const response = host.switchToHttp().getResponse<Response>()
     const error = new ErrorResponseDto({
       statusCode: HttpStatus.BAD_REQUEST,
-      message: `Cannot modify devices while in-use`,
+      message: `Cannot alter devices while in-use`,
     })
 
     response.status(error?.statusCode).json(error)

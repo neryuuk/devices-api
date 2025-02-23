@@ -56,7 +56,7 @@ export class DevicesService {
   async update(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
     if (Number.isNaN(id)) throw new BadRequestException()
 
-    const statusCheck = await this.devicesRepository.findOneBy({ id })
+    const statusCheck = await this.findOne(id)
     if (
       statusCheck?.state === State.IN_USE &&
       (updateDeviceDto.name || updateDeviceDto.brand_id)
@@ -79,8 +79,11 @@ export class DevicesService {
     throw new NotFoundException()
   }
 
-  remove(id: number): Promise<boolean> {
+  async remove(id: number): Promise<boolean> {
     if (Number.isNaN(id)) throw new BadRequestException()
+
+    const statusCheck = await this.findOne(id)
+    if (statusCheck?.state === State.IN_USE) throw new ForbiddenEditException()
 
     return this.devicesRepository
       .softDelete({ id, deleted_at: IsNull() })
