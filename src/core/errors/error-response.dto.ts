@@ -7,7 +7,7 @@ export class ErrorResponseDto {
   public statusCode: ErrorHttpStatusCode
 
   @ApiResponseProperty()
-  public message: string
+  public message: string | string[]
 
   constructor(data: Partial<ErrorResponseDto>) {
     Object.assign(this, data)
