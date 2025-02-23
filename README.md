@@ -2,7 +2,7 @@
 
 ## Description
 
-REST API using [NestJS](https://github.com/nestjs/nest) framework
+REST API using [NestJS](https://github.com/nestjs/nest) framework (based on instructions present at [`CHALLENGE.md`](CHALLENGE.md))
 
 ## Running inside docker
 
