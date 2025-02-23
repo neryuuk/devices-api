@@ -1,13 +1,13 @@
+import { HttpStatus, ValidationPipe } from '@nestjs/common'
+import { HttpAdapterHost, NestFactory } from '@nestjs/core'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import {
   CatchAllExceptionFilter,
   CoreModule,
   LoggerService,
   NotFoundExceptionFilter,
   QueryFailedExceptionFilter,
-} from '@core'
-import { HttpStatus, ValidationPipe } from '@nestjs/common'
-import { HttpAdapterHost, NestFactory } from '@nestjs/core'
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+} from './core'
 
 async function bootstrap() {
   const app = await NestFactory.create(CoreModule, {

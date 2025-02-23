@@ -1,6 +1,6 @@
-import { CoreModule } from '@core'
 import { Test, TestingModule } from '@nestjs/testing'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { CoreModule } from '../core'
 import { Brand } from './brand.entity'
 import { BrandsController } from './brands.controller'
 import { BrandsService } from './brands.service'
