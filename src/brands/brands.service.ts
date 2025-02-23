@@ -59,27 +59,6 @@ export class BrandsService {
       })
   }
 
-  updatePartial(id: number, updateBrandDto: UpdateBrandDto): Promise<Brand> {
-    if (Number.isNaN(id)) throw new BadRequestException()
-
-    return this.brandsRepository
-      .createQueryBuilder()
-      .update(updateBrandDto as Partial<Brand>)
-      .where({ id })
-      .returning('*')
-      .execute()
-      .then((result) => {
-        if (
-          result &&
-          result.raw &&
-          Array.isArray(result.raw) &&
-          result.raw[0]
-        ) return result.raw[0] as Brand
-
-        throw new NotFoundException()
-      })
-  }
-
   remove(id: number): Promise<boolean> {
     if (Number.isNaN(id)) throw new BadRequestException()
 
