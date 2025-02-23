@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Brand } from './brand.entity'
@@ -24,9 +24,7 @@ export class BrandsService {
           result.raw &&
           Array.isArray(result.raw) &&
           result.raw[0]
-        ) {
-          return result.raw[0] as Brand
-        }
+        ) return result.raw[0] as Brand
       })
   }
 
@@ -39,17 +37,41 @@ export class BrandsService {
   }
 
   update(id: number, updateBrandDto: UpdateBrandDto): Promise<Brand> {
-    return this.brandsRepository.save(
-      { ...updateBrandDto, id } as Partial<Brand>,
-      { reload: true },
-    )
+    return this.brandsRepository
+      .createQueryBuilder()
+      .update(updateBrandDto as Partial<Brand>)
+      .where({ id })
+      .returning('*')
+      .execute()
+      .then((result) => {
+        if (
+          result &&
+          result.raw &&
+          Array.isArray(result.raw) &&
+          result.raw[0]
+        ) return result.raw[0] as Brand
+
+        throw new NotFoundException()
+      })
   }
 
   updatePartial(id: number, updateBrandDto: UpdateBrandDto): Promise<Brand> {
-    return this.brandsRepository.save(
-      { ...updateBrandDto, id } as Partial<Brand>,
-      { reload: true },
-    )
+    return this.brandsRepository
+      .createQueryBuilder()
+      .update(updateBrandDto as Partial<Brand>)
+      .where({ id })
+      .returning('*')
+      .execute()
+      .then((result) => {
+        if (
+          result &&
+          result.raw &&
+          Array.isArray(result.raw) &&
+          result.raw[0]
+        ) return result.raw[0] as Brand
+
+        throw new NotFoundException()
+      })
   }
 
   remove(id: number): Promise<boolean> {
