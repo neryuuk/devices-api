@@ -1,4 +1,3 @@
-export * from './core.module'
-export * from './errors'
+export { CoreModule } from './core.module'
 export * from './exception-filters'
-export * from './logger/logger.service'
+export { LoggerService } from './logger/logger.service'

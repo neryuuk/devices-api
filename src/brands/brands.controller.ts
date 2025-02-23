@@ -1,4 +1,3 @@
-import { ErrorResponseDto } from '@core'
 import {
   Body,
   Controller,
@@ -10,6 +9,7 @@ import {
   Put,
 } from '@nestjs/common'
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { ErrorResponseDto } from '../core/errors/error-response.dto'
 import { Brand } from './brand.entity'
 import { CreateBrandDto, UpdateBrandDto } from './brands.dto'
 import { BrandsService } from './brands.service'
@@ -19,7 +19,6 @@ import { BrandsService } from './brands.service'
 export class BrandsController {
   constructor(private readonly brandsService: BrandsService) {}
 
-  @Post()
   @ApiBadRequestResponse({ type: ErrorResponseDto })
   @ApiCreatedResponse({
     type: Brand,
@@ -28,11 +27,11 @@ export class BrandsController {
       name: 'Brand Name 1',
     } as Brand,
   })
+  @Post()
   create(@Body() createBrandDto: CreateBrandDto) {
     return this.brandsService.create(createBrandDto)
   }
 
-  @Get(':id')
   @ApiBadRequestResponse({ type: ErrorResponseDto })
   @ApiNotFoundResponse({ type: ErrorResponseDto })
   @ApiOkResponse({
@@ -42,11 +41,11 @@ export class BrandsController {
       name: 'Brand Name 1',
     } as Brand,
   })
+  @Get(':id')
   findOne(@Param('id') id: string) {
     return this.brandsService.findOne(+id)
   }
 
-  @Get()
   @ApiNotFoundResponse({ type: Brand, isArray: true, example: [] })
   @ApiOkResponse({
     type: Brand,
@@ -58,6 +57,7 @@ export class BrandsController {
       },
     ],
   })
+  @Get()
   findAll() {
     return this.brandsService.findAll()
   }
