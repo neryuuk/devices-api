@@ -9,12 +9,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-
-export enum State {
-  AVAILABLE = 'available',
-  IN_USE = 'in-use',
-  INACTIVE = 'inactive',
-}
+import { State } from './state.enum'
 
 @Entity('devices')
 export class Device {

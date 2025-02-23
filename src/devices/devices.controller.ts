@@ -12,9 +12,10 @@ import {
 } from '@nestjs/common'
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { ErrorResponseDto } from '../core/errors/error-response.dto'
-import { Device, State } from './device.entity'
+import { Device } from './device.entity'
 import { CreateDeviceDto, UpdateDeviceDto } from './devices.dto'
 import { DevicesService } from './devices.service'
+import { State } from './state.enum'
 
 @ApiTags('Devices')
 @Controller('devices')
