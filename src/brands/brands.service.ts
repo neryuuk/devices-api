@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Brand } from './brand.entity'
@@ -19,12 +23,8 @@ export class BrandsService {
       .returning('*')
       .execute()
       .then((result) => {
-        if (
-          result &&
-          result.raw &&
-          Array.isArray(result.raw) &&
-          result.raw[0]
-        ) return result.raw[0] as Brand
+        if (result && result.raw && Array.isArray(result.raw) && result.raw[0])
+          return result.raw[0] as Brand
       })
   }
 
@@ -48,12 +48,8 @@ export class BrandsService {
       .returning('*')
       .execute()
       .then((result) => {
-        if (
-          result &&
-          result.raw &&
-          Array.isArray(result.raw) &&
-          result.raw[0]
-        ) return result.raw[0] as Brand
+        if (result && result.raw && Array.isArray(result.raw) && result.raw[0])
+          return result.raw[0] as Brand
 
         throw new NotFoundException()
       })

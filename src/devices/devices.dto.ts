@@ -4,7 +4,15 @@ import {
   ApiSchema,
   PartialType,
 } from '@nestjs/swagger'
-import { IsEnum, IsInt, IsNotEmpty, IsOptional, IsString, Length, Min } from 'class-validator'
+import {
+  IsEnum,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Length,
+  Min,
+} from 'class-validator'
 import { State } from './state.enum'
 
 @ApiSchema({ name: 'CreateDeviceDTO' })

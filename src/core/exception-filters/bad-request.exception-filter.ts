@@ -1,4 +1,9 @@
-import { ArgumentsHost, BadRequestException, Catch, HttpStatus } from '@nestjs/common'
+import {
+  ArgumentsHost,
+  BadRequestException,
+  Catch,
+  HttpStatus,
+} from '@nestjs/common'
 import { BaseExceptionFilter } from '@nestjs/core'
 import { Response } from 'express'
 import { ErrorResponseDto } from '../errors/error-response.dto'
