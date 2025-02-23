@@ -5,6 +5,7 @@ import {
   BadRequestExceptionFilter,
   CatchAllExceptionFilter,
   CoreModule,
+  ForbiddenEditExceptionFilter,
   LoggerService,
   NotFoundExceptionFilter,
   QueryFailedExceptionFilter,
@@ -18,6 +19,7 @@ async function bootstrap(): Promise<void> {
 
   app.useGlobalFilters(
     new CatchAllExceptionFilter(app.get(HttpAdapterHost).httpAdapter),
+    new ForbiddenEditExceptionFilter(),
     new BadRequestExceptionFilter(),
     new NotFoundExceptionFilter(),
     new QueryFailedExceptionFilter(),
