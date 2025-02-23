@@ -72,6 +72,16 @@ pnpm run test:cov
 
 Given the default port (`3005`) for running the application, the API documentation is available at [localhost:3005/docs](http://localhost:3005/docs)
 
+## TO-DO
+
+A few improvements to be considered for the next iterations of the application:
+
+- [] Authentication
+- [] Pagination
+- [] Caching
+- [] Configuration through ConfigModule, to be injected where needed
+- [] Implementation of fields like `created_at` and `deleted_at` throughout all entities for better auditing
+
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
