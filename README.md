@@ -2,9 +2,11 @@
 
 ## Description
 
-REST API using [NestJS](https://github.com/nestjs/nest) framework
+REST API using [NestJS](https://github.com/nestjs/nest) framework (based on instructions present at [`CHALLENGE.md`](CHALLENGE.md))
 
 ## Running inside docker
+
+For more information on installing and configuring the Docker Engine: https://docs.docker.com/engine/install/
 
 The project is containerized and can be run via [`docker-compose.yaml`](docker-compose.yaml)
 
@@ -71,6 +73,16 @@ pnpm run test:cov
 ## Documentation
 
 Given the default port (`3005`) for running the application, the API documentation is available at [localhost:3005/docs](http://localhost:3005/docs)
+
+## TO-DO
+
+A few improvements to be considered for the next iterations of the application:
+
+- [] Authentication
+- [] Pagination
+- [] Caching
+- [] Configuration through ConfigModule, to be injected where needed
+- [] Implementation of fields like `created_at` and `deleted_at` throughout all entities for better auditing
 
 ## License
 
