@@ -52,6 +52,6 @@ Develop a REST API capable of persisting and managing device resources.
 The solution will be evaluated as per the following criteria:
 
 - Implementation of all acceptance criteria.
-- Usage of well-known best practices and design paXerns.
+- Usage of well-known best practices and design patterns.
 - Code efficiency and general performance.
 - Additional features and production readiness of the overall solution.
