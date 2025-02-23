@@ -52,6 +52,7 @@ export class BrandsController {
     return this.brandsService.findOne(+id)
   }
 
+  @ApiBadRequestResponse({ type: ErrorResponseDto })
   @ApiNotFoundResponse({ type: Brand, isArray: true, example: [] })
   @ApiOkResponse({
     type: Brand,
@@ -68,17 +69,22 @@ export class BrandsController {
     return this.brandsService.findAll()
   }
 
+  @ApiBadRequestResponse({ type: ErrorResponseDto })
   @Put(':id')
-  update(@Param('id') id: number, @Body() updateBrandDto: UpdateBrandDto) {
+  update(
+    @Param('id') id: number,
+    @Body() updateBrandDto: CreateBrandDto
+  ) {
     return this.brandsService.update(+id, updateBrandDto)
   }
 
+  @ApiBadRequestResponse({ type: ErrorResponseDto })
   @Patch(':id')
   updatePartial(
     @Param('id') id: number,
     @Body() updateBrandDto: UpdateBrandDto,
   ) {
-    return this.brandsService.updatePartial(+id, updateBrandDto)
+    return this.brandsService.update(+id, updateBrandDto)
   }
 
   @ApiBadRequestResponse({ type: ErrorResponseDto })
