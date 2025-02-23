@@ -2,6 +2,7 @@ import { HttpStatus, ValidationPipe } from '@nestjs/common'
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import {
+  BadRequestExceptionFilter,
   CatchAllExceptionFilter,
   CoreModule,
   LoggerService,
@@ -17,6 +18,7 @@ async function bootstrap(): Promise<void> {
 
   app.useGlobalFilters(
     new CatchAllExceptionFilter(app.get(HttpAdapterHost).httpAdapter),
+    new BadRequestExceptionFilter(),
     new NotFoundExceptionFilter(),
     new QueryFailedExceptionFilter(),
   )
@@ -24,7 +26,11 @@ async function bootstrap(): Promise<void> {
   app.useGlobalPipes(
     new ValidationPipe({
       errorHttpStatusCode: HttpStatus.BAD_REQUEST,
+      forbidNonWhitelisted: true,
+      forbidUnknownValues: true,
+      stopAtFirstError: true,
       transform: true,
+      whitelist: true,
     }),
   )
 
