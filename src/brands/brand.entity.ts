@@ -8,6 +8,6 @@ export class Brand {
   public id: number
 
   @ApiResponseProperty()
-  @Column()
+  @Column({ type: 'varchar', length: 64, nullable: false })
   public name: string
 }
