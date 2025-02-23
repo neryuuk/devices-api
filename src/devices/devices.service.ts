@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { ForbiddenEditException } from 'src/core/errors/forbidden-edit.error'
 import { FindOptionsWhere, IsNull, Repository } from 'typeorm'
 import { Device } from './device.entity'
 import {
@@ -7,6 +8,7 @@ import {
   SearchDeviceDto,
   UpdateDeviceDto,
 } from './devices.dto'
+import { State } from './state.enum'
 
 @Injectable()
 export class DevicesService {
@@ -51,22 +53,30 @@ export class DevicesService {
     )
   }
 
-  update(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
+  async update(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
     if (Number.isNaN(id)) throw new BadRequestException()
 
-    return this.devicesRepository.save(
-      { ...updateDeviceDto, id } as Partial<Device>,
-      { reload: true },
-    )
-  }
+    const statusCheck = await this.devicesRepository.findOneBy({ id })
+    if (
+      statusCheck?.state === State.IN_USE &&
+      (updateDeviceDto.name || updateDeviceDto.brand_id)
+    ) throw new ForbiddenEditException()
 
-  updatePartial(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
-    if (Number.isNaN(id)) throw new BadRequestException()
+    const result = await this.devicesRepository
+      .createQueryBuilder()
+      .update(updateDeviceDto as Partial<Device>)
+      .where({ id })
+      .returning('*')
+      .execute()
 
-    return this.devicesRepository.save(
-      { ...updateDeviceDto, id } as Partial<Device>,
-      { reload: true },
-    )
+    if (
+      result &&
+      result.raw &&
+      Array.isArray(result.raw) &&
+      result.raw[0]
+    ) return new Device(result.raw[0] as Device)
+
+    throw new NotFoundException()
   }
 
   remove(id: number): Promise<boolean> {
