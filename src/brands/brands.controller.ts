@@ -48,7 +48,7 @@ export class BrandsController {
     } as Brand,
   })
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.brandsService.findOne(+id)
   }
 
@@ -69,13 +69,13 @@ export class BrandsController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateBrandDto: UpdateBrandDto) {
+  update(@Param('id') id: number, @Body() updateBrandDto: UpdateBrandDto) {
     return this.brandsService.update(+id, updateBrandDto)
   }
 
   @Patch(':id')
   updatePartial(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updateBrandDto: UpdateBrandDto,
   ) {
     return this.brandsService.updatePartial(+id, updateBrandDto)
@@ -83,7 +83,7 @@ export class BrandsController {
 
   @ApiBadRequestResponse({ type: ErrorResponseDto })
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.brandsService.remove(+id)
   }
 }

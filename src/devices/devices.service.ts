@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { FindOptionsWhere, IsNull, Repository } from 'typeorm'
 import { Device } from './device.entity'
@@ -35,6 +35,8 @@ export class DevicesService {
   }
 
   findOne(id: number): Promise<Device | null> {
+    if (Number.isNaN(id)) throw new BadRequestException()
+
     return this.devicesRepository
       .findOneBy({ id, deleted_at: IsNull() })
       .then((result) => {
@@ -50,6 +52,8 @@ export class DevicesService {
   }
 
   update(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
+    if (Number.isNaN(id)) throw new BadRequestException()
+
     return this.devicesRepository.save(
       { ...updateDeviceDto, id } as Partial<Device>,
       { reload: true },
@@ -57,6 +61,8 @@ export class DevicesService {
   }
 
   updatePartial(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
+    if (Number.isNaN(id)) throw new BadRequestException()
+
     return this.devicesRepository.save(
       { ...updateDeviceDto, id } as Partial<Device>,
       { reload: true },
@@ -64,6 +70,8 @@ export class DevicesService {
   }
 
   remove(id: number): Promise<boolean> {
+    if (Number.isNaN(id)) throw new BadRequestException()
+
     return this.devicesRepository
       .softDelete({ id, deleted_at: IsNull() })
       .then((result) => result?.affected === 1)

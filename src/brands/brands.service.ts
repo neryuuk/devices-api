@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Brand } from './brand.entity'
@@ -29,6 +29,8 @@ export class BrandsService {
   }
 
   findOne(id: number): Promise<Brand | null> {
+    if (Number.isNaN(id)) throw new BadRequestException()
+
     return this.brandsRepository.findOneBy({ id })
   }
 
@@ -37,6 +39,8 @@ export class BrandsService {
   }
 
   update(id: number, updateBrandDto: UpdateBrandDto): Promise<Brand> {
+    if (Number.isNaN(id)) throw new BadRequestException()
+
     return this.brandsRepository
       .createQueryBuilder()
       .update(updateBrandDto as Partial<Brand>)
@@ -56,6 +60,8 @@ export class BrandsService {
   }
 
   updatePartial(id: number, updateBrandDto: UpdateBrandDto): Promise<Brand> {
+    if (Number.isNaN(id)) throw new BadRequestException()
+
     return this.brandsRepository
       .createQueryBuilder()
       .update(updateBrandDto as Partial<Brand>)
@@ -75,6 +81,8 @@ export class BrandsService {
   }
 
   remove(id: number): Promise<boolean> {
+    if (Number.isNaN(id)) throw new BadRequestException()
+
     return this.brandsRepository
       .delete({ id })
       .then((result) => result?.affected === 1)

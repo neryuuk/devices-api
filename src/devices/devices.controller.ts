@@ -9,14 +9,14 @@ import {
   Post,
   Put,
   Query,
-  UseInterceptors,
+  UseInterceptors
 } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
-  ApiTags,
+  ApiTags
 } from '@nestjs/swagger'
 import { ErrorResponseDto } from '../core/errors/error-response.dto'
 import { Device } from './device.entity'
@@ -63,7 +63,7 @@ export class DevicesController {
     } as Device,
   })
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.devicesService.findOne(+id)
   }
 
@@ -83,23 +83,20 @@ export class DevicesController {
     ],
   })
   @Get()
-  findAll(
-    @Query()
-    query?: SearchDeviceDto,
-  ) {
+  findAll(@Query() query?: SearchDeviceDto) {
     return this.devicesService.findAll(query)
   }
 
   @ApiBadRequestResponse({ type: ErrorResponseDto })
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateDeviceDto: UpdateDeviceDto) {
+  update(@Param('id') id: number, @Body() updateDeviceDto: UpdateDeviceDto) {
     return this.devicesService.update(+id, updateDeviceDto)
   }
 
   @ApiBadRequestResponse({ type: ErrorResponseDto })
   @Patch(':id')
   updatePartial(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updateDeviceDto: UpdateDeviceDto,
   ) {
     return this.devicesService.updatePartial(+id, updateDeviceDto)
@@ -107,7 +104,7 @@ export class DevicesController {
 
   @ApiBadRequestResponse({ type: ErrorResponseDto })
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.devicesService.remove(+id)
   }
 }
