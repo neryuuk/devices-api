@@ -4,7 +4,7 @@
     "json",
     "ts"
   ],
-  "rootDir": "src",
+  "rootDir": "./src",
   "testEnvironment": "node",
   "testRegex": ".*\\.spec\\.ts$",
   "transform": {
@@ -14,7 +14,9 @@
     "**/*.(t|j)s",
     "!**/*.dto.(t|j)s",
     "!**/*.entity.(t|j)s",
+    "!**/*.enum.(t|j)s",
     "!**/*.module.(t|j)s",
+    "!**/*.mock.(t|j)s",
     "!**/index.(t|j)s",
     "!**/main.(t|j)s"
   ],
