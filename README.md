@@ -83,6 +83,7 @@ A few improvements to be considered for the next iterations of the application:
 - [ ] Caching
 - [ ] Configuration through ConfigModule, to be injected where needed
 - [ ] Implementation of fields like `created_at` and `deleted_at` throughout all entities for better auditing
+- [ ] Increase test coverage
 
 ## License
 
