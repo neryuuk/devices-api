@@ -2,15 +2,15 @@ import { Brand } from './brand.entity'
 
 export const brandMock = [
   {
-    id: 4001,
+    id: 1,
     name: 'Brand Name 1',
   },
   {
-    id: 4002,
+    id: 2,
     name: 'Brand Name 2',
   },
   {
-    id: 4001,
+    id: 3,
     name: 'Brand Name 3',
   },
 ] as Brand[]
